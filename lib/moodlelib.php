@@ -4071,6 +4071,11 @@ function delete_user(stdClass $user) {
     // Remove from all cohorts.
     $DB->delete_records('cohort_members', array('userid' => $user->id));
 
+    // Remove users cohortroles if assigned.
+    if ($DB->record_exists('tool_cohortroles', array('userid' => $user->id))) {
+        $DB->delete_records('tool_cohortroles', array('userid' => $user->id));
+    }
+
     // Remove from all groups.
     $DB->delete_records('groups_members', array('userid' => $user->id));
 
